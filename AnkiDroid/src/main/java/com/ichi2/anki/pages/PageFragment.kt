@@ -62,14 +62,13 @@ abstract class PageFragment : Fragment() {
         Timber.i("Loading $url")
         webView.loadUrl(url)
 
-        // Scroll Change listener is used to check whether the scroll is done up or down
-        // to hide or show the toolbar
+
         webView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
 
-            // Check if the user is scrolling up or down
+
             if (scrollY > oldScrollY && !isScrolling) {
                 isScrolling = true
-                // Hide the toolbar if scrolling up
+
                 toolbar?.visibility = View.GONE
 
                 handler.postDelayed({
@@ -77,7 +76,7 @@ abstract class PageFragment : Fragment() {
                 }, 300)
             } else if (scrollY < oldScrollY && !isScrolling){
                 isScrolling = true
-                // Show the toolbar if scrolled down or at the top
+
                 toolbar?.visibility = View.VISIBLE
 
                 handler.postDelayed({
