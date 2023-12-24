@@ -20,6 +20,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.R
 import com.ichi2.themes.Themes
@@ -44,6 +45,7 @@ abstract class PageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.page_fragment, container, false)
+        val toolbar: Toolbar? = activity?.findViewById(R.id.toolbar)
 
         webView = view.findViewById<WebView>(R.id.pagesWebview).apply {
             settings.javaScriptEnabled = true
@@ -55,6 +57,20 @@ abstract class PageFragment : Fragment() {
 
         Timber.i("Loading $url")
         webView.loadUrl(url)
+
+        // Scroll Change listener is used to check whether the scroll is done up or down
+        // to hide or show the toolbar
+        webView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+
+            // Check if the user is scrolling up or down
+            if (scrollY > oldScrollY) {
+                // Hide the toolbar if scrolling up
+                toolbar?.visibility = View.GONE
+            } else {
+                // Show the toolbar if scrolled down or at the top
+                toolbar?.visibility = View.VISIBLE
+            }
+        }
 
         return view
     }
