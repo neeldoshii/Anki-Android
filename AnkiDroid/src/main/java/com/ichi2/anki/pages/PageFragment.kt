@@ -16,6 +16,8 @@
 package com.ichi2.anki.pages
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +48,8 @@ abstract class PageFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.page_fragment, container, false)
         val toolbar: Toolbar? = activity?.findViewById(R.id.toolbar)
+        val handler = Handler(Looper.getMainLooper())
+        var isScrolling = false
 
         webView = view.findViewById<WebView>(R.id.pagesWebview).apply {
             settings.javaScriptEnabled = true
@@ -63,12 +67,22 @@ abstract class PageFragment : Fragment() {
         webView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
 
             // Check if the user is scrolling up or down
-            if (scrollY > oldScrollY) {
+            if (scrollY > oldScrollY && !isScrolling) {
+                isScrolling = true
                 // Hide the toolbar if scrolling up
                 toolbar?.visibility = View.GONE
-            } else {
+
+                handler.postDelayed({
+                    isScrolling = false
+                }, 300)
+            } else if (scrollY < oldScrollY && !isScrolling){
+                isScrolling = true
                 // Show the toolbar if scrolled down or at the top
                 toolbar?.visibility = View.VISIBLE
+
+                handler.postDelayed({
+                    isScrolling = false
+                }, 300)
             }
         }
 
