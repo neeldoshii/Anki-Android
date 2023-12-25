@@ -69,7 +69,7 @@ abstract class PageFragment : Fragment() {
                 handler.postDelayed({
                     isScrolling = false
                 }, 300)
-            } else if (scrollY < oldScrollY && !isScrolling){
+            } else if (scrollY < oldScrollY && !isScrolling) {
                 isScrolling = true
                 toolbar?.visibility = View.VISIBLE
                 handler.postDelayed({
