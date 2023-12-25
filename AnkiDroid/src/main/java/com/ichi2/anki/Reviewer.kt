@@ -37,6 +37,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
+import androidx.appcompat.widget.ThemeUtils
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
@@ -178,7 +179,7 @@ open class Reviewer :
         mTextBarLearn = findViewById(R.id.learn_number)
         mTextBarReview = findViewById(R.id.review_number)
         mToolbar = findViewById(R.id.toolbar)
-
+        window!!.navigationBarColor = ThemeUtils.getThemeAttrColor(this, R.attr.showAnswerColor)
         startLoadingCollection()
     }
 
