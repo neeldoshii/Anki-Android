@@ -62,23 +62,16 @@ abstract class PageFragment : Fragment() {
         Timber.i("Loading $url")
         webView.loadUrl(url)
 
-
         webView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-
-
             if (scrollY > oldScrollY && !isScrolling) {
                 isScrolling = true
-
                 toolbar?.visibility = View.GONE
-
                 handler.postDelayed({
                     isScrolling = false
                 }, 300)
             } else if (scrollY < oldScrollY && !isScrolling){
                 isScrolling = true
-
                 toolbar?.visibility = View.VISIBLE
-
                 handler.postDelayed({
                     isScrolling = false
                 }, 300)
