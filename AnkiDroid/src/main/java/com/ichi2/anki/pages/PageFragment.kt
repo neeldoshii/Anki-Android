@@ -16,8 +16,6 @@
 package com.ichi2.anki.pages
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +46,6 @@ abstract class PageFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.page_fragment, container, false)
         val toolbar: Toolbar? = activity?.findViewById(R.id.toolbar)
-        val handler = Handler(Looper.getMainLooper())
         var isScrolling = false
 
         webView = view.findViewById<WebView>(R.id.pagesWebview).apply {
@@ -66,13 +63,13 @@ abstract class PageFragment : Fragment() {
             if (scrollY > oldScrollY && !isScrolling) {
                 isScrolling = true
                 toolbar?.visibility = View.GONE
-                handler.postDelayed({
+                webView.postDelayed({
                     isScrolling = false
                 }, 300)
             } else if (scrollY < oldScrollY && !isScrolling) {
                 isScrolling = true
                 toolbar?.visibility = View.VISIBLE
-                handler.postDelayed({
+                webView.postDelayed({
                     isScrolling = false
                 }, 300)
             }
