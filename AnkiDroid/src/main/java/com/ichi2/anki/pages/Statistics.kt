@@ -24,7 +24,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.webkit.WebView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.MenuHost
@@ -71,7 +70,7 @@ class Statistics : PageFragment() {
         )
         val toolbar: Toolbar? = activity?.findViewById(R.id.toolbar)
         var isScrolling = false
-        webView = view.findViewById<WebView>(R.id.pagesWebview)
+        webView = view.findViewById(R.id.pagesWebview)
         webView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (scrollY > oldScrollY && !isScrolling) {
                 isScrolling = true
