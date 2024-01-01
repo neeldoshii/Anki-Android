@@ -20,7 +20,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.R
 import com.ichi2.themes.Themes
