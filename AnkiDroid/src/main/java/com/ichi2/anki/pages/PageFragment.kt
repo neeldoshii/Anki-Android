@@ -45,8 +45,6 @@ abstract class PageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.page_fragment, container, false)
-        val toolbar: Toolbar? = activity?.findViewById(R.id.toolbar)
-        var isScrolling = false
 
         webView = view.findViewById<WebView>(R.id.pagesWebview).apply {
             settings.javaScriptEnabled = true
@@ -58,22 +56,6 @@ abstract class PageFragment : Fragment() {
 
         Timber.i("Loading $url")
         webView.loadUrl(url)
-
-        webView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-            if (scrollY > oldScrollY && !isScrolling) {
-                isScrolling = true
-                toolbar?.visibility = View.GONE
-                webView.postDelayed({
-                    isScrolling = false
-                }, 300)
-            } else if (scrollY < oldScrollY && !isScrolling) {
-                isScrolling = true
-                toolbar?.visibility = View.VISIBLE
-                webView.postDelayed({
-                    isScrolling = false
-                }, 300)
-            }
-        }
 
         return view
     }

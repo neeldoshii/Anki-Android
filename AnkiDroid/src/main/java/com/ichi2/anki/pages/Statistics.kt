@@ -24,6 +24,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.webkit.WebView
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -66,6 +68,24 @@ class Statistics : PageFragment() {
             viewLifecycleOwner,
             Lifecycle.State.RESUMED
         )
+        val toolbar: Toolbar? = activity?.findViewById(R.id.toolbar)
+        var isScrolling = false
+        webView = view.findViewById<WebView>(R.id.pagesWebview)
+        webView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            if (scrollY > oldScrollY && !isScrolling) {
+                isScrolling = true
+                toolbar?.visibility = View.GONE
+                webView.postDelayed({
+                    isScrolling = false
+                }, 300)
+            } else if (scrollY < oldScrollY && !isScrolling) {
+                isScrolling = true
+                toolbar?.visibility = View.VISIBLE
+                webView.postDelayed({
+                    isScrolling = false
+                }, 300)
+            }
+        }
     }
 
     /**Prepares and initiates a printing task for the content(stats) displayed in the WebView.
