@@ -61,6 +61,7 @@ class Statistics : PageFragment() {
                             exportWebViewContentAsPDF()
                             true
                         }
+
                         else -> false
                     }
                 }
