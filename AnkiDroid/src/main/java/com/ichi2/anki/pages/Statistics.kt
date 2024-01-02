@@ -28,6 +28,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
@@ -74,16 +75,16 @@ class Statistics : PageFragment() {
         webView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (scrollY > oldScrollY && !isScrolling) {
                 isScrolling = true
-                toolbar?.visibility = View.GONE
+                toolbar?.isVisible = false
                 webView.postDelayed({
                     isScrolling = false
                 }, 300)
             } else if (scrollY < oldScrollY && !isScrolling) {
                 isScrolling = true
-                toolbar?.visibility = View.VISIBLE
+                toolbar?.isVisible = true
                 webView.postDelayed({
                     isScrolling = false
-                }, 300)
+                }, DELAY_MILLI_SECONDS)
             }
         }
     }
@@ -107,5 +108,7 @@ class Statistics : PageFragment() {
         fun getIntent(context: Context): Intent {
             return PagesActivity.getIntent(context, Statistics::class)
         }
+
+        const val DELAY_MILLI_SECONDS = 300L
     }
 }
